@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -38,6 +40,13 @@ public class EmployeeController {
 
         employeeServiceImpl.createEmployee(employee);
 
-        return "redirect:/employee/new";
+        return "redirect:/employee/list";
+    }
+
+    @GetMapping("/list")
+    public String getEmployeeList(Model model) {
+        List<Employee> employees=employeeServiceImpl.getAllEmployees();
+        model.addAttribute("employees",employees);
+        return "employee/employees";
     }
 }
