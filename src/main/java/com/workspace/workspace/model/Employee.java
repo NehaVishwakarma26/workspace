@@ -14,7 +14,6 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "employeeId cannot be blank")
     @Pattern(regexp = "^EMP\\d+$",message = "Employee ID should start with EMP")
     @Column(unique = true)
     private String employeeId;

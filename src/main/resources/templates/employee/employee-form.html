@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Employee Form</h2>
+
+<form action="#" th:action="@{/employee/saveEmployee}" th:object="${employee}" method="POST">
+
+    First name: <input type="text" th:field="*{firstName}">
+    <br><br>
+    Last name: <input type="text" th:field="*{lastName}">
+    <br><br>
+
+    Email: <input type="text" th:field="*{email}">
+    <br><br>
+
+    Password: <input type="password" th:field="*{password}">
+    <br><br>
+
+    Role: <select id="role" th:field="*{role}">
+    <option th:each="roleOpt:${roles}" th:value="${roleOpt.name()}" th:text="${roleOpt.name()}"></option>
+</select>
+    <br><br>
+
+    Department: <select id="department" th:field="*{department}">
+    <option th:each="deptOpt:${departments}" th:value="${deptOpt.name()}" th:text="${deptOpt.name()}"></option>
+</select>
+    <br><br>
+
+    Designation: <input type="text" th:field="*{designation}">
+    <br><br>
+
+    <input type="submit" th:value="submit">
+</form>
+
+</body>
+</html>

@@ -3,14 +3,18 @@ package com.workspace.workspace.service;
 import com.workspace.workspace.dao.EmployeeRepository;
 import com.workspace.workspace.model.Employee;
 import com.workspace.workspace.model.Status;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService{
 
+    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Override
@@ -25,6 +29,10 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setJoiningDate(LocalDate.now());
 
         employee.setStatus(Status.ACTIVE);
+
+        employeeRepository.save(employee);
+
+        employee.setEmployeeId("EMP"+employee.getId());
 
         employeeRepository.save(employee);
 
