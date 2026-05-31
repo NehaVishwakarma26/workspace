@@ -41,9 +41,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/list")
-    public String getEmployeeList(Model model) {
-        List<Employee> employees=employeeServiceImpl.getAllEmployees();
+    public String getEmployeeList(@RequestParam(required = false) Department department,@RequestParam(required = false) Role role,Model model) {
+
+
+        List<Employee> employees=employeeServiceImpl.getAllEmployees(department,role);
         model.addAttribute("employees",employees);
+        model.addAttribute("roles",Role.values());
+        model.addAttribute("departments",Department.values());
         return "employee/employees";
     }
 
@@ -71,4 +75,12 @@ public class EmployeeController {
         employeeServiceImpl.updateEmployee(employeeId,updatedEmployee);
         return "redirect:/employee/list";
     }
+
+    @GetMapping("/deactivate/{employeeId}")
+    public String deactivateEmployee(@PathVariable String employeeId) {
+        employeeServiceImpl.deactivateEmployee(employeeId);
+        return "redirect:/employee/list";
+    }
+
+
 }

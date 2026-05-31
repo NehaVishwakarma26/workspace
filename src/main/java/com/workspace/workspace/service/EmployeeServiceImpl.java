@@ -1,7 +1,9 @@
 package com.workspace.workspace.service;
 
 import com.workspace.workspace.dao.EmployeeRepository;
+import com.workspace.workspace.model.Department;
 import com.workspace.workspace.model.Employee;
+import com.workspace.workspace.model.Role;
 import com.workspace.workspace.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +61,20 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees(Department department, Role role) {
+
+        if(department!=null && role!=null) {
+           return employeeRepository.findEmployeesByRoleAndDepartment(role, department);
+        }
+
+        else if(department!=null) {
+           return employeeRepository.findEmployeesByDepartment(department);
+        }
+
+        else if(role!=null) {
+           return employeeRepository.findEmployeesByRole(role);
+        }
+
         return employeeRepository.findAll();
     }
 
@@ -88,7 +103,11 @@ public class EmployeeServiceImpl implements EmployeeService{
         Employee employee=employeeRepository.findEmployeeByEmployeeId(employeeId)
                 .orElseThrow(()->new RuntimeException("Employee not found"));
 
+        System.out.println("Employee "+employeeId+" deactivated");
+
         employee.setStatus(Status.INACTIVE);
+
+        employeeRepository.save(employee);
 
     }
 }

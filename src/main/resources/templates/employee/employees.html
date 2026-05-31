@@ -6,20 +6,30 @@
 </head>
 <body>
 
+<form action="#" th:action="@{/employee/list}" method="GET">
+  <select name="department">
+    <option value="">All Departments</option>
+    <option th:each="deptOpt:${departments}" th:value="${deptOpt.name()}" th:text="${deptOpt.name()}"></option>
+  </select>
+
+  <select name="role">
+    <option value="">All Roles</option>
+    <option th:each="roleOpt:${roles}" th:value="${roleOpt.name()}" th:text="${roleOpt.name()}"></option>
+  </select>
+
+  <input type="submit" value="Filter">
+</form>
+
+
 <table border="1">
   <thead>
 <tr>
   <th>Employee ID</th>
   <th>First Name</th>
   <th>Last Name</th>
-  <th>Email</th>
-  <th>Department</th>
-  <th>Designation</th>
-  <th>Joining Date</th>
-  <th>Role</th>
-  <th>Status</th>
   <th>Details</th>
-
+  <th>Update</th>
+  <th>Deactivate</th>
 </tr>
   </thead>
   <tbody>
@@ -27,14 +37,10 @@
     <td th:text="${emp.employeeId}"></td>
     <td th:text="${emp.firstName}"></td>
     <td th:text="${emp.lastName}"></td>
-    <td th:text="${emp.email}"></td>
-    <td th:text="${emp.department}"></td>
-    <td th:text="${emp.designation}"></td>
-    <td th:text="${emp.joiningDate}"></td>
-    <td th:text="${emp.role}"></td>
-    <td th:text="${emp.status}"></td>
+
     <td> <a th:href="@{/employee/detail/{employeeId}(employeeId=${emp.employeeId})}"><button type="button">Details</button></a> </td>
     <td> <a th:href="@{/employee/update/{employeeId}(employeeId=${emp.employeeId})}"><button type="button">Update</button></a></td>
+    <td><a th:href="@{/employee/deactivate/{employeeId}(employeeId=${emp.employeeId})}"><button type="button">Deactivate</button></a> </td>
   </tr>
   </tbody>
 </table>
