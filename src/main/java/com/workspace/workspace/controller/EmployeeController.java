@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,5 +45,30 @@ public class EmployeeController {
         List<Employee> employees=employeeServiceImpl.getAllEmployees();
         model.addAttribute("employees",employees);
         return "employee/employees";
+    }
+
+    @GetMapping("/detail/{employeeId}")
+    public String getEmployeeDetails(@PathVariable String employeeId,Model model) {
+        Employee employee=employeeServiceImpl.getEmployeeByEmployeeId(employeeId);
+
+        model.addAttribute("employee",employee);
+
+        return "employee/employee-detail";
+
+    }
+
+    @GetMapping("/update/{employeeId}")
+    public String updateEmployeeDetails(@PathVariable String employeeId,Model model) {
+        Employee employee=employeeServiceImpl.getEmployeeByEmployeeId(employeeId);
+
+        model.addAttribute("employee",employee);
+
+        return "employee/update-employee";
+    }
+
+    @PostMapping("/saveUpdatedEmployee/{employeeId}")
+    public String saveUpdatedEmployee(@ModelAttribute("employee") Employee updatedEmployee,@PathVariable String employeeId) {
+        employeeServiceImpl.updateEmployee(employeeId,updatedEmployee);
+        return "redirect:/employee/list";
     }
 }

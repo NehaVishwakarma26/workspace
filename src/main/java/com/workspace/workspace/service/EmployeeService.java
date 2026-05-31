@@ -11,7 +11,7 @@ public interface EmployeeService {
 
      Optional<Employee> getEmployeeById(Long id);
 
-     Optional<Employee> getEmployeeByEmployeeId(String employeeId);
+     Employee getEmployeeByEmployeeId(String employeeId);
 
      Optional<Employee> getEmployeeByEmail(String email);
 

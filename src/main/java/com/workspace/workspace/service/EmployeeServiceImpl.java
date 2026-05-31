@@ -46,9 +46,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Optional<Employee> getEmployeeByEmployeeId(String employeeId) {
+    public Employee getEmployeeByEmployeeId(String employeeId) {
 
-        return employeeRepository.findEmployeeByEmployeeId(employeeId);
+        Employee employee=employeeRepository.findEmployeeByEmployeeId(employeeId)
+                .orElseThrow(()->new RuntimeException("employee not found"));
+        return employee;
     }
 
     @Override
@@ -70,7 +72,6 @@ public class EmployeeServiceImpl implements EmployeeService{
             employee.setEmail(updatedEmployee.getEmail());
             employee.setFirstName(updatedEmployee.getFirstName());
             employee.setLastName(updatedEmployee.getLastName());
-            employee.setPassword(updatedEmployee.getPassword());
             employee.setDesignation(updatedEmployee.getDesignation());
             employee.setDepartment(updatedEmployee.getDepartment());
             employee.setRole(updatedEmployee.getRole());
