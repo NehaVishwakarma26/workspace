@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -13,37 +15,51 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        UserDetails admin= User
-                .withUsername("admin")
-                .password("{noop}admin123")
-                .roles("ADMIN","EMPLOYEE")
-                .build();
+    private final CustomAuthenticationSuccessHandler successHandler;
 
-        UserDetails employee=User
-                .withUsername("employee123")
-                .password("{noop}employee123")
-                .roles("EMPLOYEE")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin,employee);
+    public SecurityConfig(
+            CustomAuthenticationSuccessHandler successHandler
+    ) {
+        this.successHandler=successHandler;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth->
                 auth
+                        .requestMatchers("/login","/employee/new","/employee/saveEmployee").permitAll()
                         .requestMatchers(
                                 "/employee/new",
                                 "/employee/saveEmployee",
-                                "/employee/update/**",
+                                "/employee/saveEmployee",
+                                "/employee/update",
                                 "/employee/saveUpdatedEmployee/**",
-                                "/employee/deactivate/**"
+                                "/employee/deactivate/**",
+                                "/employee/list",
+                                "/employee/detail/**"
                         ).hasRole("ADMIN")
-                        .anyRequest().authenticated());
+                        .requestMatchers("/employee/me","/employee/update","/employee/saveUpdatedEmployee/**")
+                        .hasAnyRole("EMPLOYEE","ADMIN")
+                        .anyRequest().authenticated())
+                ;
 
-        httpSecurity.formLogin(form->form.permitAll());
+        httpSecurity.formLogin(form->
+                form
+                        .loginPage("/login")
+                        .successHandler(successHandler)
+                        .failureUrl("/login?error")
+                        .permitAll());
+
+        httpSecurity.logout(
+                logout->logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
+        );
 
         return httpSecurity.build();
     }

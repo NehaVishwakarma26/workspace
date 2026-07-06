@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Employee</title>
+</head>
+<body>
+
+<form th:object="${employee}" action="#" th:action="@{/employee/me/saveUpdatedEmployee}" method="POST">
+
+    First Name: <input th:value="*{firstName}" type="text" th:field="*{firstName}">
+    Last Name: <input th:value="*{lastName}" type="text" th:field="*{lastName}">
+<!--    Email: <input th:value="*{email}" type="text" th:field="*{email}">-->
+
+    <input type="submit" value="submit">
+
+</form>
+
+</body>
+</html>

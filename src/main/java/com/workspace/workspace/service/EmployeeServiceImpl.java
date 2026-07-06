@@ -1,11 +1,14 @@
 package com.workspace.workspace.service;
 
 import com.workspace.workspace.dao.EmployeeRepository;
+import com.workspace.workspace.dto.EmployeeAdminUpdateRequest;
+import com.workspace.workspace.dto.EmployeeSelfUpdateRequest;
 import com.workspace.workspace.model.Department;
 import com.workspace.workspace.model.Employee;
 import com.workspace.workspace.model.Role;
 import com.workspace.workspace.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,6 +22,9 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Employee createEmployee(Employee employee) {
 
@@ -31,6 +37,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setJoiningDate(LocalDate.now());
 
         employee.setStatus(Status.ACTIVE);
+
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
 
         employeeRepository.save(employee);
 
@@ -79,25 +87,6 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee updateEmployee(String employeeId, Employee updatedEmployee) {
-
-            Employee employee=employeeRepository.findEmployeeByEmployeeId(employeeId)
-                    .orElseThrow(()->new RuntimeException("Employee with this employee id does not exist"));
-
-            employee.setEmail(updatedEmployee.getEmail());
-            employee.setFirstName(updatedEmployee.getFirstName());
-            employee.setLastName(updatedEmployee.getLastName());
-            employee.setDesignation(updatedEmployee.getDesignation());
-            employee.setDepartment(updatedEmployee.getDepartment());
-            employee.setRole(updatedEmployee.getRole());
-
-            employeeRepository.save(employee);
-
-            return employee;
-
-    }
-
-    @Override
     public void deactivateEmployee(String employeeId) {
 
         Employee employee=employeeRepository.findEmployeeByEmployeeId(employeeId)
@@ -109,5 +98,34 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         employeeRepository.save(employee);
 
+    }
+
+    @Override
+    public Employee updateOwnProfile(String email, EmployeeSelfUpdateRequest updateRequest) {
+
+        Employee employee=employeeRepository.findEmployeeByEmail(email)
+                .orElseThrow(()->new RuntimeException("Employee with this employee id not found."));
+
+        employee.setFirstName(updateRequest.getFirstName());
+        employee.setLastName(updateRequest.getLastName());
+//        employee.setEmail(updateRequest.getEmail());
+
+        return employeeRepository.save(employee);
+
+    }
+
+    @Override
+    public Employee updateEmployeeByAdmin(String employeeId, EmployeeAdminUpdateRequest updateRequest) {
+        Employee employee=employeeRepository.findEmployeeByEmployeeId(employeeId)
+                .orElseThrow(()->new RuntimeException("Employee with this employee id not found."));
+
+        employee.setFirstName(updateRequest.getFirstName());
+        employee.setLastName(updateRequest.getLastName());
+        employee.setEmail(updateRequest.getEmail());
+        employee.setRole(updateRequest.getRole());
+        employee.setDesignation(updateRequest.getDesignation());
+        employee.setDepartment(updateRequest.getDepartment());
+
+        return employeeRepository.save(employee);
     }
 }

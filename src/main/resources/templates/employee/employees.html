@@ -6,6 +6,11 @@
 </head>
 <body>
 
+<form th:action="@{/logout}" method="POST">
+  <button type="submit">Logout</button>
+</form>
+<br><br>
+
 <form action="#" th:action="@{/employee/list}" method="GET">
   <select name="department">
     <option value="">All Departments</option>
