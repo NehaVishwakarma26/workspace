@@ -34,11 +34,11 @@ public class EmployeeController {
     }
 
     @PostMapping("/saveEmployee")
-    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+    public String saveEmployee(@ModelAttribute("employee") Employee employee,Authentication authentication) {
         System.out.println("ROLE = " + employee.getRole());
         System.out.println("DEPT = " + employee.getDepartment());
 
-        employeeServiceImpl.createEmployee(employee);
+        employeeServiceImpl.createEmployee(employee,authentication.getName());
 
         return "redirect:/employee/list";
     }
@@ -100,13 +100,19 @@ public class EmployeeController {
         request.setEmployeeId(employee.getEmployeeId());
 
         model.addAttribute("employee",request);
+        model.addAttribute("departments",Department.values());
+        model.addAttribute("roles",Role.values());
 
         return "employee/update-employee";
     }
 
     @PostMapping("/saveUpdatedEmployee/{employeeId}")
-    public String saveUpdatedEmployee(@ModelAttribute("employee") EmployeeAdminUpdateRequest updateRequest,@PathVariable String employeeId) {
-        employeeServiceImpl.updateEmployeeByAdmin(employeeId,updateRequest);
+    public String saveUpdatedEmployee(
+            @ModelAttribute("employee")
+            EmployeeAdminUpdateRequest updateRequest,
+            @PathVariable String employeeId,
+            Authentication authentication) {
+        employeeServiceImpl.updateEmployeeByAdmin(employeeId,authentication.getName(),updateRequest);
         return "redirect:/employee/list";
     }
 

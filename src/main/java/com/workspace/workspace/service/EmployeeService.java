@@ -6,13 +6,14 @@ import com.workspace.workspace.model.Department;
 import com.workspace.workspace.model.Employee;
 import com.workspace.workspace.model.Role;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeService {
 
-     Employee createEmployee(Employee employee);
+     Employee createEmployee(Employee employee, String creatorEmail);
 
      Optional<Employee> getEmployeeById(Long id);
 
@@ -26,5 +27,5 @@ public interface EmployeeService {
 
      Employee updateOwnProfile(String email, EmployeeSelfUpdateRequest updateRequest);
 
-     Employee updateEmployeeByAdmin(String employeeId, EmployeeAdminUpdateRequest updateRequest);
+     Employee updateEmployeeByAdmin(String employeeId,String updaterEmail, EmployeeAdminUpdateRequest updateRequest);
 }

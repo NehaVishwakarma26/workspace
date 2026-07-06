@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Update Employee</title>
@@ -12,10 +12,51 @@
     Last Name: <input th:value="*{lastName}" type="text" th:field="*{lastName}">
     Email: <input th:value="*{email}" type="text" th:field="*{email}">
     Designation: <input th:value="*{designation}" type="text" th:field="*{designation}">
-    Department: <input th:value="*{department}" type="text" th:field="*{department}">
-    Role: <input th:value="*{role}" type="text" th:field="*{role}">
+    <br><br>
 
+    <br><br>
 
+    <div sec:authorize="hasRole('SUPER_ADMIN')">
+
+        Department:
+        <select th:field="*{department}">
+            <option th:each="deptOpt : ${departments}"
+                    th:value="${deptOpt}"
+                    th:text="${deptOpt}">
+            </option>
+        </select>
+
+        <br><br>
+
+        Role:
+        <select th:field="*{role}">
+            <option th:each="roleOpt : ${roles}"
+                    th:value="${roleOpt}"
+                    th:text="${roleOpt}">
+            </option>
+        </select>
+
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+
+        Department:
+        <span th:text="*{department}"></span>
+
+        <br><br>
+
+        Role:
+        <span th:text="*{role}"></span>
+
+        <input type="hidden"
+               th:field="*{department}">
+
+        <input type="hidden"
+               th:field="*{role}">
+
+    </div>
+
+    <br><br>
 
     <input type="submit" value="submit">
 

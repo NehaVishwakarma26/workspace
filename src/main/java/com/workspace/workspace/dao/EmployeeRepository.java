@@ -27,4 +27,10 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
 
     List<Employee> findEmployeesByRoleAndDepartment(Role role,Department department);
 
+    boolean existsByDepartmentAndRole(Department department,Role role);
+
+    boolean existsByDepartmentAndRoleAndEmployeeIdNot(
+            Department department,Role role,String employeeId
+    );
+
 }
