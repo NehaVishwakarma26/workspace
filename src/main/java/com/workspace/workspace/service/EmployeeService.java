@@ -28,4 +28,6 @@ public interface EmployeeService {
      Employee updateOwnProfile(String email, EmployeeSelfUpdateRequest updateRequest);
 
      Employee updateEmployeeByAdmin(String employeeId,String updaterEmail, EmployeeAdminUpdateRequest updateRequest);
+
+     List<Employee> getEmployeesByDepartment(Department department);
 }

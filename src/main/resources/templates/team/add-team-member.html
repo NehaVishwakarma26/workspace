@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Team Member</title>
+</head>
+
+<body>
+
+<h1>Add Team Member</h1>
+
+<h3 th:text="${team.teamName}"></h3>
+
+<form th:object="${member}"
+      th:action="@{/team/{teamId}/members/add(teamId=${team.teamId})}"
+      method="POST">
+
+    Employee:
+
+    <select th:field="*{employeeId}">
+
+        <option th:each="employee : ${employees}"
+                th:value="${employee.employeeId}"
+                th:text="${employee.employeeId
+                    + ' - '
+                    + employee.firstName
+                    + ' '
+                    + employee.lastName}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+    Member Role:
+
+    <select th:field="*{teamMemberRole}">
+
+        <option th:each="role : ${memberRoles}"
+                th:value="${role}"
+                th:text="${role}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <input type="submit" value="Add Member">
+
+</form>
+
+</body>
+</html>

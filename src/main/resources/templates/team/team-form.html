@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Team</title>
+</head>
+<body>
+
+<h2>Create Team</h2>
+
+<form th:object="${team}" th:action="@{/team/saveTeam}" method="POST">
+
+    Team Name: <input type="text" th:field="*{teamName}">
+    <br><br>
+    Description: <textarea th:field="*{description}"></textarea>
+    <br><br>
+    <div sec:authorize="hasRole('SUPER_ADMIN')">
+        Department:
+        <select th:field="*{department}">
+            <option th:each="deptOpt:${departments}"
+                    th:value="${deptOpt}"
+                    th:text="${deptOpt}"></option>
+        </select>
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <p>
+            Team will be created in your department.
+        </p>
+
+    </div>
+    <br><br>
+    <input type="submit" value="Create Team">
+
+</form>
+
+</body>
+</html>

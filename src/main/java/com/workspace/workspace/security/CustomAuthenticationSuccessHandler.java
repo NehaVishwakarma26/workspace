@@ -19,15 +19,24 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             Authentication authentication
     ) throws IOException, ServletException {
 
+        boolean isSuperAdmin=authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(authority->
+                        authority.getAuthority().equals("ROLE_SUPER_ADMIN"));
+
         boolean isAdmin=authentication
                 .getAuthorities()
                 .stream()
                 .anyMatch(authority->
                         authority.getAuthority().equals("ROLE_ADMIN"));
 
-        if(isAdmin) {
+        if(isSuperAdmin || isAdmin) {
+            System.out.println("SUccess login");
             response.sendRedirect("/employee/list");
-        } else {
+        }
+        else {
+            System.out.println("SUccess login");
             response.sendRedirect("/employee/me");
         }
 

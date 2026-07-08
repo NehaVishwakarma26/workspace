@@ -40,7 +40,7 @@ public class EmployeeController {
 
         employeeServiceImpl.createEmployee(employee,authentication.getName());
 
-        return "redirect:/employee/list";
+        return "team/teams";
     }
 
     @GetMapping("/list")
@@ -113,14 +113,14 @@ public class EmployeeController {
             @PathVariable String employeeId,
             Authentication authentication) {
         employeeServiceImpl.updateEmployeeByAdmin(employeeId,authentication.getName(),updateRequest);
-        return "redirect:/employee/list";
+        return "team/teams";
     }
 
 
     @GetMapping("/deactivate/{employeeId}")
     public String deactivateEmployee(@PathVariable String employeeId) {
         employeeServiceImpl.deactivateEmployee(employeeId);
-        return "redirect:/employee/list";
+        return "team/teams";
     }
 
     @GetMapping("/me")

@@ -8,6 +8,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
+        System.out.println("LOGIN INITIATED");
         return "auth/login";
     }
 }

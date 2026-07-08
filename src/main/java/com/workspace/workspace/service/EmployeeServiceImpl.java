@@ -199,4 +199,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         return employeeRepository.save(employee);
     }
+
+    @Override
+    public List<Employee> getEmployeesByDepartment(Department department) {
+        return employeeRepository.findEmployeesByDepartmentAndStatus(
+                department,
+                Status.ACTIVE
+        );
+    }
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Team Details</title>
+</head>
+
+<body>
+
+<h1>Team Details</h1>
+
+Team ID:
+<span th:text="${team.teamId}"></span>
+
+<br>
+
+Team Name:
+<span th:text="${team.teamName}"></span>
+
+<br>
+
+Description:
+<span th:text="${team.description}"></span>
+
+<br>
+
+Department:
+<span th:text="${team.department}"></span>
+
+<br>
+
+Status:
+<span th:text="${team.status}"></span>
+
+<br><br>
+
+<a th:href="@{/team/{teamId}/members/add(teamId=${team.teamId})}">
+    <button type="button">Add Member</button>
+</a>
+
+<h2>Team Members</h2>
+
+<table border="1">
+
+    <thead>
+    <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Joined Date</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="member : ${members}">
+
+        <td th:text="${member.employee.employeeId}"></td>
+
+        <td th:text="${member.employee.firstName + ' ' + member.employee.lastName}"></td>
+
+        <td th:text="${member.teamMemberRole}"></td>
+
+        <td th:text="${member.joinedDate}"></td>
+
+        <td th:text="${member.status}"></td>
+
+        <td>
+            <form th:if="${member.status.name()=='ACTIVE'}"
+            th:action="@{/team/{teamId}/members/{employeeId}/remove(teamId=${team.teamId},employeeId=${member.employee.employeeId})}" method="POST">
+
+                <button type="submit">Remove</button>
+
+            </form>
+            <span th:if="${member.status.name()=='INACTIVE'}">
+                Removed
+            </span>
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+</html>

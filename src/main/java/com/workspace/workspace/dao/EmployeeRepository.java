@@ -3,6 +3,7 @@ package com.workspace.workspace.dao;
 import com.workspace.workspace.model.Department;
 import com.workspace.workspace.model.Employee;
 import com.workspace.workspace.model.Role;
+import com.workspace.workspace.model.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,11 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
 
     boolean existsByDepartmentAndRoleAndEmployeeIdNot(
             Department department,Role role,String employeeId
+    );
+
+    List<Employee> findEmployeesByDepartmentAndStatus(
+            Department department,
+            Status status
     );
 
 }

@@ -40,7 +40,7 @@ public class SecurityConfig {
                 auth
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/**").hasAnyRole("EMPLOYEE","ADMIN","SUPER_ADMIN")
-                        .requestMatchers("/login","/employee/new","/employee/saveEmployee").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .requestMatchers(
                                 "/employee/new",
                                 "/employee/saveEmployee",
@@ -49,7 +49,10 @@ public class SecurityConfig {
                                 "/employee/saveUpdatedEmployee/**",
                                 "/employee/deactivate/**",
                                 "/employee/list",
-                                "/employee/detail/**"
+                                "/employee/detail/**",
+                                "/team/new",
+                                "/team/saveTeam",
+                                "/team/list"
                         ).hasAnyRole("ADMIN","SUPER_ADMIN")
                         .requestMatchers("/employee/me","/employee/update","/employee/saveUpdatedEmployee/**")
                         .hasAnyRole("EMPLOYEE","ADMIN","SUPER_ADMIN")
