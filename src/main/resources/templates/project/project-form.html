@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Project</title>
+</head>
+
+<body>
+
+<h1>Create Project</h1>
+
+<p>
+    Team:
+    <span th:text="${team.teamName}"></span>
+</p>
+
+<p>
+    Team ID:
+    <span th:text="${team.teamId}"></span>
+</p>
+
+<form th:object="${project}"
+      th:action="@{/project/team/{teamId}/save(teamId=${team.teamId})}"
+      method="POST">
+
+    Project Name:
+
+    <input type="text"
+           th:field="*{projectName}">
+
+    <br><br>
+
+    Description:
+
+    <textarea th:field="*{description}">
+    </textarea>
+
+    <br><br>
+
+    Start Date:
+
+    <input type="date"
+           th:field="*{startDate}">
+
+    <br><br>
+
+    Due Date:
+
+    <input type="date"
+           th:field="*{dueDate}">
+
+    <br><br>
+
+    <input type="submit"
+           value="Create Project">
+
+</form>
+
+</body>
+</html>

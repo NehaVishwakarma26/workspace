@@ -85,6 +85,53 @@ Status:
     </tbody>
 
 </table>
+<br>
+<a th:href="@{/project/team/{teamId}/new(teamId=${team.teamId})}">
+    <button type="button">
+        Create Project
+    </button>
+</a>
+
+<h2>Projects</h2>
+
+<table border="1">
+
+    <thead>
+    <tr>
+        <th>Project ID</th>
+        <th>Project Name</th>
+        <th>Status</th>
+        <th>Start Date</th>
+        <th>Due Date</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="project : ${projects}">
+
+        <td th:text="${project.projectId}"></td>
+
+        <td th:text="${project.projectName}"></td>
+
+        <td th:text="${project.projectStatus}"></td>
+
+        <td th:text="${project.startDate}"></td>
+
+        <td th:text="${project.dueDate}"></td>
+
+        <td>
+            <a th:href="@{/project/detail/{projectId}(projectId=${project.projectId})}">
+                <button type="button">Details</button>
+            </a>
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
 
 </body>
 </html>

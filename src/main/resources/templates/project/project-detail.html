@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project Details</title>
+</head>
+
+<body>
+
+<h1>Project Details</h1>
+
+Project ID:
+<span th:text="${project.projectId}"></span>
+
+<br>
+
+Project Name:
+<span th:text="${project.projectName}"></span>
+
+<br>
+
+Description:
+<span th:text="${project.description}"></span>
+
+<br>
+
+Team:
+<span th:text="${project.team.teamName}"></span>
+
+<br>
+
+Status:
+<span th:text="${project.projectStatus}"></span>
+
+<br>
+
+Start Date:
+<span th:text="${project.startDate}"></span>
+
+<br>
+
+Due Date:
+<span th:text="${project.dueDate}"></span>
+
+<br>
+
+Created Date:
+<span th:text="${project.createdDate}"></span>
+
+<br><br>
+
+<button type="button">
+    Create Task
+</button>
+
+<h2>Tasks</h2>
+
+</body>
+</html>

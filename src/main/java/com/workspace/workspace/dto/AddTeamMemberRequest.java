@@ -1,5 +1,6 @@
-package com.workspace.workspace.model;
+package com.workspace.workspace.dto;
 
+import com.workspace.workspace.model.TeamMemberRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

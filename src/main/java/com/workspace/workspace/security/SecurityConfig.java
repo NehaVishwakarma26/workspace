@@ -52,7 +52,10 @@ public class SecurityConfig {
                                 "/employee/detail/**",
                                 "/team/new",
                                 "/team/saveTeam",
-                                "/team/list"
+                                "/team/list",
+                                "/project/team/*/new",
+                                "/project/team/*/save",
+                                "/project/detail/**"
                         ).hasAnyRole("ADMIN","SUPER_ADMIN")
                         .requestMatchers("/employee/me","/employee/update","/employee/saveUpdatedEmployee/**")
                         .hasAnyRole("EMPLOYEE","ADMIN","SUPER_ADMIN")

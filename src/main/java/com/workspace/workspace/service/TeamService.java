@@ -1,8 +1,7 @@
 package com.workspace.workspace.service;
 
 import com.workspace.workspace.dto.TeamCreateRequest;
-import com.workspace.workspace.model.AddTeamMemberRequest;
-import com.workspace.workspace.model.Department;
+import com.workspace.workspace.dto.AddTeamMemberRequest;
 import com.workspace.workspace.model.Team;
 import com.workspace.workspace.model.TeamMember;
 

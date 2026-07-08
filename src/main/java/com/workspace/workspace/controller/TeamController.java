@@ -1,10 +1,11 @@
 package com.workspace.workspace.controller;
 
+import com.workspace.workspace.dto.AddTeamMemberRequest;
 import com.workspace.workspace.dto.TeamCreateRequest;
 import com.workspace.workspace.model.*;
 import com.workspace.workspace.service.EmployeeServiceImpl;
+import com.workspace.workspace.service.ProjectServiceImpl;
 import com.workspace.workspace.service.TeamServiceImpl;
-import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,9 @@ public class TeamController {
 
     @Autowired
     private final EmployeeServiceImpl employeeServiceImpl;
+
+    @Autowired
+    private final ProjectServiceImpl projectServiceImpl;
 
     @GetMapping("/new")
     public String createTeam(Model model) {
@@ -60,7 +64,9 @@ public class TeamController {
         );
 
         List<TeamMember> members=teamService.getTeamMembers(teamId);
+        List<Project> projects=projectServiceImpl.getProjectsByTeam(teamId);
 
+        model.addAttribute("projects",projects);
         model.addAttribute("team",team);
         model.addAttribute("members",members);
 
