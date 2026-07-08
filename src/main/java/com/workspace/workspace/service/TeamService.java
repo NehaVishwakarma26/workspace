@@ -20,4 +20,7 @@ public interface TeamService {
     TeamMember addTeamMember(String teamId, AddTeamMemberRequest request,String creatorEmail);
 
     void removeTeamMember(String teamId,String employeeId,String removerEmail);
+
+    List<TeamMember> getActiveTeamMembers(String teamId);
+
 }

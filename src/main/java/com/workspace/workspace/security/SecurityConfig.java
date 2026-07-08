@@ -55,7 +55,9 @@ public class SecurityConfig {
                                 "/team/list",
                                 "/project/team/*/new",
                                 "/project/team/*/save",
-                                "/project/detail/**"
+                                "/project/detail/**",
+                                "/task/project/*/new",
+                                "/task/project/*/save"
                         ).hasAnyRole("ADMIN","SUPER_ADMIN")
                         .requestMatchers("/employee/me","/employee/update","/employee/saveUpdatedEmployee/**")
                         .hasAnyRole("EMPLOYEE","ADMIN","SUPER_ADMIN")

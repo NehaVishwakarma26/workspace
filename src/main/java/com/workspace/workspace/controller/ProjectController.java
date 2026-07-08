@@ -1,9 +1,11 @@
 package com.workspace.workspace.controller;
 
 import com.workspace.workspace.dto.ProjectCreateRequest;
+import com.workspace.workspace.dto.TaskDetailsResponse;
 import com.workspace.workspace.model.Project;
 import com.workspace.workspace.model.Team;
 import com.workspace.workspace.service.ProjectServiceImpl;
+import com.workspace.workspace.service.TaskServiceImpl;
 import com.workspace.workspace.service.TeamServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/project")
@@ -22,6 +26,7 @@ public class ProjectController {
     private final ProjectServiceImpl projectServiceImpl;
     @Autowired
     private final TeamServiceImpl teamServiceImpl;
+    private final TaskServiceImpl taskServiceImpl;
 
     @GetMapping("/team/{teamId}/new")
     public String createProject(
@@ -61,8 +66,15 @@ public class ProjectController {
             Model model) {
 
         Project project=projectServiceImpl.getProjectByProjectId(projectId, authentication.getName());
+        List<TaskDetailsResponse> tasks =
+                taskServiceImpl
+                        .getTaskDetailsByProject(projectId);
         model.addAttribute("project",project);
+        model.addAttribute("tasks", tasks);
+
         return "project/project-detail";
 
     }
+
+
 }

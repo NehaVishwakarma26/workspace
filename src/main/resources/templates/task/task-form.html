@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Task</title>
+</head>
+
+<body>
+
+<h1>Create Task</h1>
+
+<p>
+    Project:
+    <span th:text="${project.projectName}"></span>
+</p>
+
+<p>
+    Project ID:
+    <span th:text="${project.projectId}"></span>
+</p>
+
+<form th:object="${task}"
+      th:action="@{/task/project/{projectId}/save(projectId=${project.projectId})}"
+      method="POST">
+
+    Task Name:
+
+    <input type="text"
+           th:field="*{taskName}">
+
+    <br><br>
+
+    Description:
+
+    <textarea th:field="*{description}">
+    </textarea>
+
+    <br><br>
+
+    Due Date:
+
+    <input type="date"
+           th:field="*{dueDate}">
+
+    <br><br>
+
+    <h3>Assign Team Members</h3>
+
+    <div th:each="member : ${members}">
+
+        <input type="checkbox"
+               th:field="*{employeeIds}"
+               th:value="${member.employee.employeeId}">
+
+        <span th:text="${member.employee.employeeId
+                        + ' - '
+                        + member.employee.firstName
+                        + ' '
+                        + member.employee.lastName}">
+        </span>
+
+        <br>
+
+    </div>
+
+    <br>
+
+    <input type="submit"
+           value="Create Task">
+
+</form>
+
+</body>
+</html>

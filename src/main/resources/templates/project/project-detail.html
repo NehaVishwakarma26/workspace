@@ -51,11 +51,57 @@ Created Date:
 
 <br><br>
 
-<button type="button">
-    Create Task
-</button>
+<a th:href="@{/task/project/{projectId}/new(projectId=${project.projectId})}">
+    <button type="button">
+        Create Task
+    </button>
+</a>
 
 <h2>Tasks</h2>
 
+<table border="1">
+
+    <thead>
+    <tr>
+        <th>Task ID</th>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Assigned To</th>
+        <th>Status</th>
+        <th>Due Date</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="task : ${tasks}">
+
+        <td th:text="${task.taskId}"></td>
+
+        <td th:text="${task.taskName}"></td>
+
+        <td th:text="${task.description}"></td>
+
+        <td>
+            <span th:each="employee, iterStat : ${task.assignedEmployee}">
+
+                <span th:text="${employee}"></span>
+
+                <span th:if="${!iterStat.last}">
+                    ,
+                </span>
+
+            </span>
+        </td>
+
+        <td th:text="${task.taskStatus}"></td>
+
+        <td th:text="${task.dueDate}"></td>
+
+    </tr>
+
+    </tbody>
+
+</table>
 </body>
 </html>

@@ -204,5 +204,17 @@ public class TeamServiceImpl implements TeamService{
         teamMemberRepository.save(teamMember);
     }
 
+    @Override
+    public List<TeamMember> getActiveTeamMembers(String teamId) {
 
+        Team team=teamRepository
+                .findTeamByTeamId(teamId)
+                .orElseThrow(()->
+                        new RuntimeException("Team not found"));
+
+        return teamMemberRepository.findTeamMembersByTeamAndStatus(
+                team,
+                Status.ACTIVE
+        );
+    }
 }
