@@ -5,51 +5,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Team Member</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
+<div class="container py-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 720px;">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-1">Add Team Member</h1>
+            <h2 class="h5 text-muted mb-4" th:text="${team.teamName}"></h2>
 
-<h1>Add Team Member</h1>
+            <form th:object="${member}"
+                  th:action="@{/team/{teamId}/members/add(teamId=${team.teamId})}"
+                  method="POST"
+                  class="row g-3">
+                <div class="col-12">
+                    <label class="form-label">Employee</label>
+                    <select th:field="*{employeeId}" class="form-select">
+                        <option th:each="employee : ${employees}"
+                                th:value="${employee.employeeId}"
+                                th:text="${employee.employeeId
+                                    + ' - '
+                                    + employee.firstName
+                                    + ' '
+                                    + employee.lastName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Member Role</label>
+                    <select th:field="*{teamMemberRole}" class="form-select">
+                        <option th:each="role : ${memberRoles}"
+                                th:value="${role}"
+                                th:text="${role}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Add Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-<h3 th:text="${team.teamName}"></h3>
-
-<form th:object="${member}"
-      th:action="@{/team/{teamId}/members/add(teamId=${team.teamId})}"
-      method="POST">
-
-    Employee:
-
-    <select th:field="*{employeeId}">
-
-        <option th:each="employee : ${employees}"
-                th:value="${employee.employeeId}"
-                th:text="${employee.employeeId
-                    + ' - '
-                    + employee.firstName
-                    + ' '
-                    + employee.lastName}">
-        </option>
-
-    </select>
-
-    <br><br>
-
-    Member Role:
-
-    <select th:field="*{teamMemberRole}">
-
-        <option th:each="role : ${memberRoles}"
-                th:value="${role}"
-                th:text="${role}">
-        </option>
-
-    </select>
-
-    <br><br>
-
-    <input type="submit" value="Add Member">
-
-</form>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

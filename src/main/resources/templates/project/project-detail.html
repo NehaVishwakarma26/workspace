@@ -5,103 +5,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Project Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
+<div class="container py-5">
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-4">Project Details</h1>
 
-<h1>Project Details</h1>
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Project ID</dt>
+                <dd class="col-sm-9" th:text="${project.projectId}"></dd>
+                <dt class="col-sm-3">Project Name</dt>
+                <dd class="col-sm-9" th:text="${project.projectName}"></dd>
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9" th:text="${project.description}"></dd>
+                <dt class="col-sm-3">Team</dt>
+                <dd class="col-sm-9" th:text="${project.team.teamName}"></dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9" th:text="${project.projectStatus}"></dd>
+                <dt class="col-sm-3">Start Date</dt>
+                <dd class="col-sm-9" th:text="${project.startDate}"></dd>
+                <dt class="col-sm-3">Due Date</dt>
+                <dd class="col-sm-9" th:text="${project.dueDate}"></dd>
+                <dt class="col-sm-3">Created Date</dt>
+                <dd class="col-sm-9" th:text="${project.createdDate}"></dd>
+            </dl>
 
-Project ID:
-<span th:text="${project.projectId}"></span>
+            <div class="mt-4">
+                <a th:href="@{/task/project/{projectId}/new(projectId=${project.projectId})}" class="btn btn-primary">Create Task</a>
+            </div>
+        </div>
+    </div>
 
-<br>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="h4 mb-3">Tasks</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0 align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Task ID</th>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Assigned To</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="task : ${tasks}">
+                        <td th:text="${task.taskId}"></td>
+                        <td th:text="${task.taskName}"></td>
+                        <td th:text="${task.description}"></td>
+                        <td>
+                            <span th:each="employee, iterStat : ${task.assignedEmployee}">
+                                <span th:text="${employee}"></span>
+                                <span th:if="${!iterStat.last}">, </span>
+                            </span>
+                        </td>
+                        <td th:text="${task.taskStatus}"></td>
+                        <td th:text="${task.dueDate}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-Project Name:
-<span th:text="${project.projectName}"></span>
-
-<br>
-
-Description:
-<span th:text="${project.description}"></span>
-
-<br>
-
-Team:
-<span th:text="${project.team.teamName}"></span>
-
-<br>
-
-Status:
-<span th:text="${project.projectStatus}"></span>
-
-<br>
-
-Start Date:
-<span th:text="${project.startDate}"></span>
-
-<br>
-
-Due Date:
-<span th:text="${project.dueDate}"></span>
-
-<br>
-
-Created Date:
-<span th:text="${project.createdDate}"></span>
-
-<br><br>
-
-<a th:href="@{/task/project/{projectId}/new(projectId=${project.projectId})}">
-    <button type="button">
-        Create Task
-    </button>
-</a>
-
-<h2>Tasks</h2>
-
-<table border="1">
-
-    <thead>
-    <tr>
-        <th>Task ID</th>
-        <th>Task Name</th>
-        <th>Description</th>
-        <th>Assigned To</th>
-        <th>Status</th>
-        <th>Due Date</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-    <tr th:each="task : ${tasks}">
-
-        <td th:text="${task.taskId}"></td>
-
-        <td th:text="${task.taskName}"></td>
-
-        <td th:text="${task.description}"></td>
-
-        <td>
-            <span th:each="employee, iterStat : ${task.assignedEmployee}">
-
-                <span th:text="${employee}"></span>
-
-                <span th:if="${!iterStat.last}">
-                    ,
-                </span>
-
-            </span>
-        </td>
-
-        <td th:text="${task.taskStatus}"></td>
-
-        <td th:text="${task.dueDate}"></td>
-
-    </tr>
-
-    </tbody>
-
-</table>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
