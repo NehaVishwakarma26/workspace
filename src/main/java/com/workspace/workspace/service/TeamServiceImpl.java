@@ -68,14 +68,14 @@ public class TeamServiceImpl implements TeamService{
                 .orElseThrow(()->new RuntimeException("Employee with this email does not exist"));
 
         if(viewer.getRole()==Role.SUPER_ADMIN) {
-            teamRepository.findAll();
+            return teamRepository.findAll();
         }
 
         if(viewer.getRole()==Role.ADMIN) {
             return teamRepository.findTeamsByDepartment(viewer.getDepartment());
         }
 
-        throw new RuntimeException("You are not authorized to view the team list.");
+        throw new RuntimeException(viewer.getRole()+"You are not authorized to view the team list.");
     }
 
     @Override

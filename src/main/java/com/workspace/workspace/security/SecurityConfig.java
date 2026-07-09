@@ -39,7 +39,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(auth->
                 auth
                         .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/**").hasAnyRole("EMPLOYEE","ADMIN","SUPER_ADMIN")
+                        .requestMatchers("/api/**","/dashboard").hasAnyRole("EMPLOYEE","ADMIN","SUPER_ADMIN")
                         .requestMatchers("/login").permitAll()
                         .requestMatchers(
                                 "/employee/new",

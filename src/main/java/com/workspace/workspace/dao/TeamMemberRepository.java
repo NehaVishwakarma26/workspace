@@ -26,4 +26,10 @@ public interface TeamMemberRepository extends JpaRepository<TeamMember,String> {
             Team team,
             Status status
     );
+
+    List<TeamMember> findTeamMembersByEmployeeAndStatus(
+            Employee employee,
+            Status status
+    );
+
 }
